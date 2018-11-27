@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Infrastructure;
+using Infrastructure.Repository;
 
-namespace KozharinovCoursework
+namespace UiApi
 {
     public class Startup
     {
@@ -19,6 +21,8 @@ namespace KozharinovCoursework
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.RegisterEntities(Configuration.GetConnectionString("common"));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
