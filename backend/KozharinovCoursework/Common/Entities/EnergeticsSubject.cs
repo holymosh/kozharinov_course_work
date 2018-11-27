@@ -11,7 +11,7 @@ namespace Common.Entities
         public string Okved { get; set; }
         public string Inn { get; set; }
         public string Address { get; set; }
-        public MailAddress Email { get; set; }
+        public string Email { get; set; }
         public string PostAddress { get; set; }
         public string Kpp { get; set; }
         public int? HoldingId { get; set; }

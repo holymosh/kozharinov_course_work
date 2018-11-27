@@ -12,10 +12,10 @@ namespace Infrastructure.Repository
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public Repository(DbSet<TEntity> dbSet, DbContext context)
+        public Repository(CommonContext commonContext)
         {
-            _dbSet = dbSet;
-            _context = context;
+            _dbSet = commonContext.Set<TEntity>();
+            _context = commonContext;
         }
 
         public int Create(TEntity entity)

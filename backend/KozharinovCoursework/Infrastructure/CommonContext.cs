@@ -32,7 +32,7 @@ namespace Infrastructure
             builder.HasKey(holding => holding.Id);
             builder.Property(holding => holding.Name);
             builder.HasOne(holding => holding.Parent);
-            builder.HasMany<EnergeticsSubject>().WithOne(subject => subject.Holding);
+            builder.HasMany<EnergeticsSubject>().WithOne(subject => subject.Holding).HasForeignKey(subject => subject.HoldingId);
             return modelBuilder;
         }
 
@@ -58,7 +58,7 @@ namespace Infrastructure
             builder.Property(o => o.Address);
             builder.Property(o => o.Name);
             builder.HasOne(o => o.Subject);
-            builder.HasOne(o => o.Parent).WithOne(o => o.Parent);
+            builder.HasOne(o => o.Parent);
             builder.HasOne(o => o.EnergeticsType);
             return modelBuilder;
         }
