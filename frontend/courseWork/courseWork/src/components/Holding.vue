@@ -1,18 +1,11 @@
 <template>
     <div id="Holding">
         <h1>Холдинги</h1>
-        <v-toolbar flat color="white">
-            <v-divider
-        class="mx-2"
-        inset
-        vertical
-      ></v-divider>
-      <v-spacer></v-spacer>
       <v-dialog class="flo" v-model="dialog" max-width="500px">
           <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
           <v-card>
               <v-card-title>
-                  <span class="headline">Новая запись</span>
+                  <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
               </v-card-title>
 
               <v-card-text>
@@ -38,8 +31,7 @@
               </v-card-actions>
           </v-card>
         </v-dialog>
-        </v-toolbar>
-        <v-data-table :headers="headers" :items="subjects" class="elevation-1">
+        <v-data-table :headers="headers" :items="holdings" class="elevation-1">
             <template slot="items" slot-scope="props">
                 <td>{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
@@ -73,7 +65,7 @@ export default {
       {text: 'Наименование', value: 'name'},
       {text: 'Родительский холдинг', value: 'parent'}
     ],
-    objects: [],
+    holdings: [],
     editedIndex: -1,
     editedItem: {
       id: 0,
@@ -103,7 +95,7 @@ export default {
   },
   methods: {
     initialize () {
-      this.subjects = [
+      this.holdings = [
         {id: 1, name: 'Электроэнергетика РФ', parent: ''},
         {id: 2, name: 'АО Бийскэнерго', parent: 'Электроэнергетика РФ'},
         {id: 3, name: 'БЭСК', parent: 'Электроэнергетика РФ'},
@@ -114,13 +106,13 @@ export default {
       ]
     },
     editItem (item) {
-      this.editedIndex = this.subjects.indexOf(item)
+      this.editedIndex = this.holdings.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
     deleteItem (item) {
-      const index = this.subjects.indexOf(item)
-      confirm('delete') && this.subjects.splice(index, 1)
+      const index = this.holdings.indexOf(item)
+      confirm('delete') && this.holdings.splice(index, 1)
     },
     close () {
       this.dialog = false
@@ -131,9 +123,9 @@ export default {
     },
     save () {
       if (this.editedIndex > 1) {
-        Object.assign(this.subjects[this.editedIndex], this.editedItem)
+        Object.assign(this.holdings[this.editedIndex], this.editedItem)
       } else {
-        this.subjects.push(this.editedItem)
+        this.holdings.push(this.editedItem)
       }
       this.close()
     }
