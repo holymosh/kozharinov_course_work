@@ -1,18 +1,11 @@
 <template>
     <div id="Object">
         <h1>Объекты электроэнергетики</h1>
-        <v-toolbar flat color="white">
-            <v-divider
-        class="mx-2"
-        inset
-        vertical
-      ></v-divider>
-      <v-spacer></v-spacer>
       <v-dialog class="flo" v-model="dialog" max-width="500px">
           <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
           <v-card>
               <v-card-title>
-                  <span class="headline">Новая запись</span>
+                  <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
               </v-card-title>
 
               <v-card-text>
@@ -47,7 +40,6 @@
               </v-card-actions>
           </v-card>
         </v-dialog>
-        </v-toolbar>
         <v-data-table :headers="headers" :items="subjects" class="elevation-1">
             <template slot="items" slot-scope="props">
                 <td>{{props.item.id}}</td>

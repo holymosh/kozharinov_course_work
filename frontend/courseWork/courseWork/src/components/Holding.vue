@@ -48,8 +48,6 @@
     </div>
 </template>
 <style>
-#Subject{
-}
 h1{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
