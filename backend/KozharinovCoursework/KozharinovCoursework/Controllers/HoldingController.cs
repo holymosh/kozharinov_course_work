@@ -6,6 +6,7 @@ using Common.Entities;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace UiApi.Controllers
 {
@@ -21,9 +22,16 @@ namespace UiApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetHoldings()
+        public IActionResult GetHoldings() => Ok(_repository.DbSet.Include(holding => holding.Parent));
+
+        [HttpPost]
+        public IActionResult CreateHolding([FromBody] Holding holding)
         {
-            return Ok(_repository.GetAll());
+            //if (holding.ParentId.HasValue)
+            //{
+            //    holding.Parent = _repository.FindById(holding.ParentId.Value);
+            //}
+            return Ok(_repository.Create(holding));
         }
     }
 }
