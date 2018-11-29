@@ -6,6 +6,7 @@ import Subject from '@/components/Subject'
 import Checking from '@/components/Checking'
 import InvestProject from '@/components/InvestProject'
 import Holding from '@/components/Holding'
+import crud from '@/components/crud'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/holdings',
       name: 'Holding',
       component: Holding
+    },
+    {
+      path: '/crud',
+      name: 'crud',
+      component: crud
     }
   ]
 })

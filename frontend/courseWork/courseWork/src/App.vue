@@ -26,11 +26,6 @@ export default {
 </script>
 
 <style scoped>
-#app {
-}
-.menu{
-  margin-bottom:1rem
-}
 a:visited {
   text-decoration: none;
   color: white;
@@ -39,6 +34,6 @@ a:link {
   text-decoration: none;
 }
 .view{
-  padding:0 2%;
+  margin:0 2%;
 }
 </style>

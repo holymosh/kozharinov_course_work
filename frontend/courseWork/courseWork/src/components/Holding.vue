@@ -1,15 +1,15 @@
 <template>
     <div id="Holding">
         <h1>Холдинги</h1>
-      <v-dialog class="flo" v-model="dialog" max-width="500px">
+      <v-dialog v-model="dialog" max-width="500px">
           <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
-          <v-card>
+          <v-card height="500px">
               <v-card-title>
                   <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
               </v-card-title>
 
               <v-card-text>
-                  <v-container grid-list-md>
+                  <v-container fluid grid-list-xl>
                       <v-layout wrap>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.id" label="Id"></v-text-field>
@@ -17,8 +17,10 @@
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.name" label="Наименование"></v-text-field>
                           </v-flex>
-                          <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.parent" label="Родительский холдинг"></v-text-field>
+                          <v-flex xs12 sm6>
+                              <!-- <v-text-field v-model="editedItem.parent" label="Родительский холдинг"></v-text-field> -->
+                              <v-select attach v-model="editedItem.parent" :items="holdings" label="Родительский холдинг"></v-select>
+                              <!-- <v-overflow-btn :items="holdings" label="test"></v-overflow-btn> -->
                           </v-flex>
                       </v-layout>
                   </v-container>
@@ -27,13 +29,13 @@
               <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darkgen-1" flat @click="close">Закрыть</v-btn>
-                  <v-btn color="blue darkgen-1" flat @click="close">Сохранить</v-btn>
+                  <v-btn color="blue darkgen-1" flat @click="save">Сохранить</v-btn>
               </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-data-table :headers="headers" :items="holdings" class="elevation-1">
+        <v-data-table :headers="headers" :items="holdings" :rows-per-page-items="[7]" class="elevation-1">
             <template slot="items" slot-scope="props">
-                <td>{{props.item.id}}</td>
+                <td class="hidden">{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
                 <td>{{props.item.parent}}</td>
                 <td class="justify-center layout px-0">
@@ -48,18 +50,24 @@
     </div>
 </template>
 <style>
+#Holding{
+}
 h1{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    padding-bottom:2%;
+    padding: 2% 0
+}
+.hidden{
+  display: none;
 }
 </style>
 <script>
 export default {
   data: () => ({
     dialog: false,
+    rowsPerPageItems: [20],
     headers: [
-      {text: 'Id', value: 'id'},
+      // {text: 'Id', value: 'id'},
       {text: 'Наименование', value: 'name'},
       {text: 'Родительский холдинг', value: 'parent'}
     ],
@@ -100,6 +108,13 @@ export default {
         {id: 4, name: 'БЭС', parent: 'Электроэнергетика РФ'},
         {id: 5, name: 'АО Волга', parent: 'Электроэнергетика РФ'},
         {id: 6, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
+        {id: 8, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
+        {id: 10, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
+        {id: 9, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
+        {id: 11, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
+        {id: 12, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
+        {id: 13, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
+        {id: 15, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
         {id: 7, name: 'Евросиб энерго', parent: 'Электроэнергетика РФ'}
       ]
     },
