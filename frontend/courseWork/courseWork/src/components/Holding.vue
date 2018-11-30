@@ -19,7 +19,14 @@
                           </v-flex>
                           <v-flex xs12 sm6>
                               <!-- <v-text-field v-model="editedItem.parent" label="Родительский холдинг"></v-text-field> -->
-                              <v-select attach v-model="editedItem.parent" :items="holdings" label="Родительский холдинг"></v-select>
+                              <v-select attach v-model="editedItem.parent" :items="holdings" label="Родительский холдинг">
+                                <template slot="selection" slot-scope="data">
+                                  {{data.item.name}}
+                                </template>
+                                <template slot="item" slot-scope="data">
+                                  {{data.item.name}}
+                                </template>
+                              </v-select>
                               <!-- <v-overflow-btn :items="holdings" label="test"></v-overflow-btn> -->
                           </v-flex>
                       </v-layout>
