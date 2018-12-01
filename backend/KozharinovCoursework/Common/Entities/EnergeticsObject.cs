@@ -14,5 +14,6 @@ namespace Common.Entities
         public string Address { get; set; }
         public int? EnegeticsTypeId { get; set; }
         public virtual EnergeticsType EnergeticsType { get; set; }
+        public virtual ICollection<InvestProject> InvestProjects { get; set; }
     }
 }

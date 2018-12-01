@@ -11,6 +11,7 @@ namespace Infrastructure
         public CommonContext(DbContextOptions<CommonContext> contextOptions) : base(contextOptions)
         {
             Database.EnsureCreated();
+            //Database.ExecuteSqlCommand(Database.GenerateCreateScript());
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,6 +19,9 @@ namespace Infrastructure
                 .BuildSubjectModel()
                 .BuildEnergeticsObjectModel()
                 .BuildEnergeticsTypeModel()
+                .BuildInvestProjectModel()
+                .BuildProjectCheckModel()
+                .BuildProjectEquipmentModel()
                 ;
             base.OnModelCreating(modelBuilder);
         }
@@ -47,7 +51,7 @@ namespace Infrastructure
             builder.Property(subject => subject.Okved);
             builder.Property(subject => subject.PostAddress);
             builder.HasOne<Holding>();
-            builder.HasMany<EnergeticsObject>().WithOne(o => o.Subject).HasForeignKey(o => o.SubjectId);
+            builder.HasMany<EnergeticsObject>().WithOne(o => o.Subject).HasForeignKey(o => o.SubjectId).OnDelete(DeleteBehavior.ClientSetNull);
             return modelBuilder;
         }
 
@@ -60,6 +64,7 @@ namespace Infrastructure
             builder.HasOne(o => o.Subject);
             builder.HasOne(o => o.Parent);
             builder.HasOne(o => o.EnergeticsType);
+            builder.HasMany(o => o.InvestProjects);
             return modelBuilder;
         }
 
@@ -68,6 +73,44 @@ namespace Infrastructure
             var builder = modelBuilder.Entity<EnergeticsType>();
             builder.HasKey(type => type.Id);
             builder.Property(type => type.Title);
+            return modelBuilder;
+        }
+
+        public static ModelBuilder BuildInvestProjectModel(this ModelBuilder modelBuilder)
+        {
+            var builder = modelBuilder.Entity<InvestProject>();
+            builder.Property(project => project.Name);
+            builder.Property(project => project.Customer);
+            builder.Property(project => project.Description);
+            builder.Property(project => project.Executor);
+            builder.Property(project => project.Start);
+            builder.Property(project => project.End);
+            builder.HasMany(project => project.EnergeticsObjects);
+            builder.HasMany(project => project.ProjectChecks).WithOne(check => check.InvestProject).OnDelete(DeleteBehavior.ClientSetNull);
+            builder.HasMany(project => project.ProjectEquipments).WithOne(equipment => equipment.InvestProject)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+            return modelBuilder;
+        }
+
+        public static ModelBuilder BuildProjectCheckModel(this ModelBuilder modelBuilder)
+        {
+            var builder = modelBuilder.Entity<ProjectCheck>();
+            builder.Property(check => check.Start);
+            builder.Property(check => check.End);
+            builder.Property(check => check.CheckingType);
+            builder.HasOne(check => check.EnergeticsObject);
+            builder.HasOne(check => check.InvestProject).WithMany(project => project.ProjectChecks).OnDelete(DeleteBehavior.ClientSetNull);
+            return modelBuilder;
+        }
+
+        public static ModelBuilder BuildProjectEquipmentModel(this ModelBuilder modelBuilder)
+        {
+            var builder = modelBuilder.Entity<ProjectEquipment>();
+            builder.Property(equipment => equipment.State);
+            builder.Property(equipment => equipment.Manufacturer);
+            builder.Property(equipment => equipment.Type);
+            builder.HasOne(equipment => equipment.InvestProject).WithMany(project => project.ProjectEquipments)
+                .OnDelete(DeleteBehavior.ClientSetNull);
             return modelBuilder;
         }
     }
