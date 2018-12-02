@@ -44,7 +44,7 @@
             <template slot="items" slot-scope="props">
                 <td class="hidden">{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
-                <td>{{props.item.parent}}</td>
+                <td>{{props.item.parent.name ? props.item.parent.name :props.item.parent }}</td>
                 <td class="justify-center layout px-0">
                     <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
                     <v-icon small class="mr-2" @click="deleteItem(props.item)">delete</v-icon>

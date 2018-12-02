@@ -18,7 +18,15 @@
                               <v-text-field v-model="editedItem.name" label="Наименование"></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.parent" label="Родительский объект"></v-text-field>
+                              <!-- <v-text-field v-model="editedItem.parent" label="Родительский объект"></v-text-field> -->
+                              <v-select attach v-model="editedItem.parent" :items="objects" label="Родительский объект" >
+                                <template slot="selection" slot-scope="data">
+                                  {{data.item.name}}
+                                </template>
+                                <template slot="item" slot-scope="data">
+                                  {{data.item.name}}
+                                </template>
+                              </v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.subject" label="Субъект"></v-text-field>
@@ -36,15 +44,15 @@
               <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darkgen-1" flat @click="close">Закрыть</v-btn>
-                  <v-btn color="blue darkgen-1" flat @click="close">Сохранить</v-btn>
+                  <v-btn color="blue darkgen-1" flat @click="save">Сохранить</v-btn>
               </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-data-table :headers="headers" :items="subjects" class="elevation-1">
+        <v-data-table :headers="headers" :items="objects" class="elevation-1">
             <template slot="items" slot-scope="props">
                 <td>{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
-                <td>{{props.item.parent}}</td>
+                <td>{{props.item.parent.name ? props.item.parent.name : props.item.parent }}</td>
                 <td>{{props.item.subject}}</td>
                 <td>{{props.item.address}}</td>
                 <td>{{props.item.type}}</td>
@@ -116,7 +124,7 @@ export default {
   },
   methods: {
     initialize () {
-      this.subjects = [
+      this.objects = [
         {id: 1, name: 'Пс 135 Кожевническая 1', parent: 'Кожевническая областная', subject: 'АО Кожевники', address: 'ул. КАСА д 1 кожевника', type: 'АЭС'},
         {id: 2, name: 'Пс 135 Кожевническая 2', parent: 'Кожевническая областная', subject: 'АО Кожевники', address: 'ул. КАСА д 1 кожевника', type: 'АЭС'},
         {id: 3, name: 'Пс 135 Кожевническая 3', parent: 'Кожевническая областная', subject: 'АО Кожевники', address: 'ул. КАСА д 1 кожевника', type: 'АЭС'},
@@ -131,13 +139,13 @@ export default {
       ]
     },
     editItem (item) {
-      this.editedIndex = this.subjects.indexOf(item)
+      this.editedIndex = this.objects.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
     deleteItem (item) {
-      const index = this.subjects.indexOf(item)
-      confirm('delete') && this.subjects.splice(index, 1)
+      const index = this.objects.indexOf(item)
+      confirm('delete') && this.objects.splice(index, 1)
     },
     close () {
       this.dialog = false
@@ -148,9 +156,9 @@ export default {
     },
     save () {
       if (this.editedIndex > 1) {
-        Object.assign(this.subjects[this.editedIndex], this.editedItem)
+        Object.assign(this.objects[this.editedIndex], this.editedItem)
       } else {
-        this.subjects.push(this.editedItem)
+        this.objects.push(this.editedItem)
       }
       this.close()
     }
