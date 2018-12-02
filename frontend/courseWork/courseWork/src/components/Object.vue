@@ -1,9 +1,9 @@
 <template>
     <div id="Object">
         <h1>Объекты электроэнергетики</h1>
-      <v-dialog class="flo" v-model="dialog" max-width="500px">
+      <v-dialog class="flo" v-model="dialog" max-width="650px">
           <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
-          <v-card>
+          <v-card height="500px">
               <v-card-title>
                   <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
               </v-card-title>
@@ -18,8 +18,7 @@
                               <v-text-field v-model="editedItem.name" label="Наименование"></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
-                              <!-- <v-text-field v-model="editedItem.parent" label="Родительский объект"></v-text-field> -->
-                              <v-select attach v-model="editedItem.parent" :items="objects" label="Родительский объект" >
+                              <v-select width="350px" attach v-model="editedItem.parent" :items="objects" label="Родительский объект" >
                                 <template slot="selection" slot-scope="data">
                                   {{data.item.name}}
                                 </template>
@@ -29,7 +28,15 @@
                               </v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.subject" label="Субъект"></v-text-field>
+                              <!-- <v-text-field v-model="editedItem.subject" label="Субъект"></v-text-field> -->
+                              <v-select attach v-model="editedItem.subject" :items="objects.map(obj => { return obj.subject.name ? obj.subject.name : obj.subject })">
+                                <!-- <template slot="selection" slot-scope="data"> -->
+                                  <!-- {{data.item}} -->
+                                <!-- </template> -->
+                                <!-- <template slot="item" slot-scope="data"> -->
+                                  <!-- {{data.item}} -->
+                                <!-- </template> -->
+                              </v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.address" label="Адрес"></v-text-field>
@@ -48,7 +55,7 @@
               </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-data-table :headers="headers" :items="objects" class="elevation-1">
+        <v-data-table :headers="headers" :rows-per-page-items="[7]" :items="objects" class="elevation-1">
             <template slot="items" slot-scope="props">
                 <td>{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>

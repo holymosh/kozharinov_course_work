@@ -62,7 +62,7 @@
 h1{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    padding: 2% 0
+    margin-top: 2%
 }
 .hidden{
   display: none;

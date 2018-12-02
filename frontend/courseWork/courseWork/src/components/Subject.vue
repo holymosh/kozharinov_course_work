@@ -1,7 +1,7 @@
 <template>
     <div id="Subject">
         <h1>Субъекты электроэнергетики</h1>
-      <v-dialog class="flo" v-model="dialog" max-width="500px">
+      <v-dialog class="flo" v-model="dialog" max-width="600px">
           <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
           <v-card>
               <v-card-title>
@@ -33,7 +33,9 @@
                               <v-text-field v-model="editedItem.kpp" label="КПП"></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.holding" label="Холдинг"></v-text-field>
+                              <!-- <v-text-field v-model="editedItem.holding" label="Холдинг"></v-text-field> -->
+                              <v-select attach v-model="editItem.holding" label="Холдинг"
+                               :items="subjects.map(subj => { return subj.holding.name ? subj.holding.name : subj.holding })"></v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.email" label="E-mail"></v-text-field>
@@ -49,7 +51,7 @@
               </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-data-table :headers="headers" :items="subjects" class="elevation-1">
+        <v-data-table :headers="headers" :rows-per-page-items="[7]" :items="subjects" class="elevation-1">
             <template slot="items" slot-scope="props">
                 <td>{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
