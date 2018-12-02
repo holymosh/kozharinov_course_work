@@ -47,7 +47,7 @@
               <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darkgen-1" flat @click="close">Закрыть</v-btn>
-                  <v-btn color="blue darkgen-1" flat @click="close">Сохранить</v-btn>
+                  <v-btn color="blue darkgen-1" flat @click="save">Сохранить</v-btn>
               </v-card-actions>
           </v-card>
         </v-dialog>
