@@ -7,6 +7,7 @@ import Checking from '@/components/Checking'
 import InvestProject from '@/components/InvestProject'
 import Holding from '@/components/Holding'
 import crud from '@/components/crud'
+import Equipment from '@/components/Equipment'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/crud',
       name: 'crud',
       component: crud
+    },
+    {
+      path: '/equipment',
+      name: 'equipment',
+      component: Equipment
     }
   ]
 })

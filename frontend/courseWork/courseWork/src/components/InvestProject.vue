@@ -89,7 +89,7 @@ export default {
       {text: 'Описание', value: 'description'},
       {text: 'Стоимость', value: 'cost'},
       {text: 'Заказчик', value: 'customer'},
-      {text: 'Исполнитель', value: 'executor'},
+      {text: 'Исполнитель', value: 'executor'}
     ],
     projects: [],
     editedIndex: -1,

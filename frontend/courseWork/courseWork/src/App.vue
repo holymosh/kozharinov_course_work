@@ -10,6 +10,7 @@
         <v-btn flat to="/projects">Проекты</v-btn>
         <v-btn flat to="/checkings">Проверки</v-btn>
         <v-btn flar to="/holdings">Холдинги</v-btn>
+        <v-btn flar to="/equipment">Оборудование</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     </div>
