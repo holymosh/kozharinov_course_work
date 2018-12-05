@@ -22,7 +22,7 @@ namespace UiApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetHoldings() => Ok(_repository.DbSet.Include(holding => holding.Parent));
+        public IActionResult GetAllHoldings() => Ok(_repository.DbSet.Include(holding => holding.Parent));
 
         [HttpPost]
         public IActionResult CreateHolding([FromBody] Holding holding)

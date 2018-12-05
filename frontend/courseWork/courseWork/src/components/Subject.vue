@@ -79,7 +79,7 @@
 h1{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    padding-bottom:2%;
+    margin-top:2%;
 }
 </style>
 <script>
@@ -140,10 +140,10 @@ export default {
   methods: {
     initialize () {
       this.subjects = [
-        {id: 1, name: 'Субъект1', okved: 'окв', inn: '213211', address: 'ул. КАСА д 1 кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Кожевники', email: 'kozhevnik_misos@misos.ru'},
-        {id: 2, name: 'Субъект2', okved: 'окв', inn: '213212', address: 'ул. КАСА д 2 кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Кожевники', email: 'kozhevnik_misos@misos.ru'},
-        {id: 3, name: 'Субъект3', okved: 'окв', inn: '213213', address: 'ул. КАСА д 3кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Кожевники', email: 'kozhevnik_misos@misos.ru'},
-        {id: 4, name: 'Субъект4', okved: 'окв', inn: '213215', address: 'ул. КАСА д 4кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Кожевники', email: 'kozhevnik_misos@misos.ru'}
+        {id: 1, name: 'Субъект1', okved: 'окв', inn: '213211', address: 'ул. Тестировщиков д 1 кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'},
+        {id: 2, name: 'Субъект2', okved: 'окв', inn: '213212', address: 'ул. Тестировщиков д 2 кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'},
+        {id: 3, name: 'Субъект3', okved: 'окв', inn: '213213', address: 'ул. Тестировщиков д 3кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'},
+        {id: 4, name: 'Субъект4', okved: 'окв', inn: '213215', address: 'ул. Тестировщиков д 4кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'}
 
       ]
     },

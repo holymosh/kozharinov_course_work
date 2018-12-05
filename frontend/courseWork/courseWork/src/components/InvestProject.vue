@@ -132,19 +132,19 @@ export default {
   methods: {
     initialize () {
       this.projects = [
-        {id: 1, name: 'Инвест проект1', startTime: 2011, endTime: 2012, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 2, name: 'Инвест проект2', startTime: 2012, endTime: 2013, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 3, name: 'Инвест проект3', startTime: 2013, endTime: 2014, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 4, name: 'Инвест проект4', startTime: 2014, endTime: 2015, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 5, name: 'Инвест проект5', startTime: 2015, endTime: 2016, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 6, name: 'Инвест проект6', startTime: 2016, endTime: 2017, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 7, name: 'Инвест проект7', startTime: 2017, endTime: 2018, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 8, name: 'Инвест проект8', startTime: 2018, endTime: 2019, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 9, name: 'Инвест проект9', startTime: 2019, endTime: 2020, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 11, name: 'Инвест проект10', startTime: 2020, endTime: 2021, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 12, name: 'Инвест проект11', startTime: 2021, endTime: 2022, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 13, name: 'Инвест проект12', startTime: 2022, endTime: 2023, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'},
-        {id: 14, name: 'Инвест проект13', startTime: 2023, endTime: 2024, description: 'Описание', cost: 100000, customer: 'АО Кожевники', executor: 'ОА Кековники'}
+        {id: 1, name: 'Инвест проект1', startTime: 2011, endTime: 2012, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 2, name: 'Инвест проект2', startTime: 2012, endTime: 2013, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 3, name: 'Инвест проект3', startTime: 2013, endTime: 2014, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 4, name: 'Инвест проект4', startTime: 2014, endTime: 2015, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 5, name: 'Инвест проект5', startTime: 2015, endTime: 2016, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 6, name: 'Инвест проект6', startTime: 2016, endTime: 2017, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 7, name: 'Инвест проект7', startTime: 2017, endTime: 2018, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 8, name: 'Инвест проект8', startTime: 2018, endTime: 2019, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 9, name: 'Инвест проект9', startTime: 2019, endTime: 2020, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 11, name: 'Инвест проект10', startTime: 2020, endTime: 2021, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 12, name: 'Инвест проект11', startTime: 2021, endTime: 2022, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 13, name: 'Инвест проект12', startTime: 2022, endTime: 2023, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'},
+        {id: 14, name: 'Инвест проект13', startTime: 2023, endTime: 2024, description: 'Описание', cost: 100000, customer: 'АО ФРОНТЕНД', executor: 'ОА Исполнители'}
 
       ]
     },

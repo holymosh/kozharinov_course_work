@@ -6,6 +6,7 @@ import router from './router'
 import vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'vue-resource'
 Vue.config.productionTip = false
 Vue.use(vuetify)
 
