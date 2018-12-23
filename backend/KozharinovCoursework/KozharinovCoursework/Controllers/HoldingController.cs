@@ -21,17 +21,41 @@ namespace UiApi.Controllers
             _repository = repository;
         }
 
+
         [HttpGet]
-        public IActionResult GetAllHoldings() => Ok(_repository.DbSet.Include(holding => holding.Parent));
+        public IActionResult GetAll()
+        {
+            return Ok(_repository.DbSet.Include(ent => ent.Parent).ToList());
+        }
 
         [HttpPost]
         public IActionResult CreateHolding([FromBody] Holding holding)
         {
-            //if (holding.ParentId.HasValue)
-            //{
-            //    holding.Parent = _repository.FindById(holding.ParentId.Value);
-            //}
-            return Ok(_repository.Create(holding));
+            var newHolding = new Holding {Name = holding.Name};
+            var created = _repository.Create(newHolding);
+            if (holding.Parent != null)
+            {
+                created.Parent = _repository.FindById(holding.Parent.Id);
+                created.ParentId = created.Parent.Id;
+                _repository.Update(created);
+            }
+            
+            return Ok(created.Id);
+        }
+
+        [HttpPut]
+        public IActionResult UpdateHolding([FromBody] Holding holding)
+        {
+            _repository.Update(holding);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteHolding(int id)
+        {
+            _repository.Remove(id);
+            return Ok();
         }
     }
 }

@@ -3,7 +3,7 @@
         <h1>Холдинги</h1>
       <v-dialog v-model="dialog" max-width="500px">
           <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
-          <v-card height="500px">
+          <v-card height="400px">
               <v-card-title>
                   <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
               </v-card-title>
@@ -11,8 +11,8 @@
               <v-card-text>
                   <v-container fluid grid-list-xl>
                       <v-layout wrap>
-                          <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.id" label="Id"></v-text-field>
+                          <v-flex class="hidden" xs12 sm6 md4>
+                              <v-text-field v-model="editedItem.id" label="Id" ></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.name" label="Наименование"></v-text-field>
@@ -44,7 +44,7 @@
             <template slot="items" slot-scope="props">
                 <td class="hidden">{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
-                <td>{{props.item.parent.name ? props.item.parent.name :props.item.parent }}</td>
+                <td>{{props.item.parent ? props.item.parent.name :'' }}</td>
                 <td class="justify-center layout px-0">
                     <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
                     <v-icon small class="mr-2" @click="deleteItem(props.item)">delete</v-icon>
@@ -108,22 +108,10 @@ export default {
   },
   methods: {
     initialize () {
-      this.holdings = [
-        {id: 1, name: 'Электроэнергетика РФ', parent: ''},
-        {id: 2, name: 'АО Бийскэнерго', parent: 'Электроэнергетика РФ'},
-        {id: 3, name: 'БЭСК', parent: 'Электроэнергетика РФ'},
-        {id: 4, name: 'БЭС', parent: 'Электроэнергетика РФ'},
-        {id: 5, name: 'АО Волга', parent: 'Электроэнергетика РФ'},
-        {id: 6, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 8, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 10, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 9, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 11, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 12, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 13, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 15, name: 'Гор электросеть', parent: 'Электроэнергетика РФ'},
-        {id: 7, name: 'Евросиб энерго', parent: 'Электроэнергетика РФ'}
-      ]
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', 'https://localhost:44389/api/holding', false)
+      xhr.send(null)
+      this.holdings = JSON.parse(xhr.responseText)
     },
     editItem (item) {
       this.editedIndex = this.holdings.indexOf(item)
@@ -133,6 +121,10 @@ export default {
     deleteItem (item) {
       const index = this.holdings.indexOf(item)
       confirm('delete') && this.holdings.splice(index, 1)
+      var xhr = new XMLHttpRequest()
+      xhr.open('DELETE', 'https://localhost:44389/api/holding/' + item.id, false)
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      xhr.send(null)
     },
     close () {
       this.dialog = false
@@ -142,10 +134,25 @@ export default {
       }, 300)
     },
     save () {
+      // if (this.editedIndex > 1) {
+      //   Object.assign(this.holdings[this.editedIndex], this.editedItem)
+      // } else {
+      //   this.holdings.push(this.editedItem)
+      // }
+      var data = JSON.stringify(this.editedItem)
+      var xhr = new XMLHttpRequest()
       if (this.editedIndex > 1) {
         Object.assign(this.holdings[this.editedIndex], this.editedItem)
+        xhr.open('PUT', 'https://localhost:44389/api/holding', false)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.send(data)
       } else {
+        xhr.open('POST', 'https://localhost:44389/api/holding', false)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.send(data)
+        this.editedItem.id = xhr.responseText
         this.holdings.push(this.editedItem)
+        console.log(this.editedItem.id)
       }
       this.close()
     }

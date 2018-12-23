@@ -17,11 +17,11 @@ namespace Infrastructure.Repository
             _context = commonContext;
         }
 
-        public int Create(TEntity entity)
+        public TEntity Create(TEntity entity)
         {
             var entityEntry = DbSet.Add(entity);
             _context.SaveChanges();
-            return entityEntry.Entity.Id;
+            return entityEntry.Entity;
         }
 
         public TEntity FindById(int id)
@@ -53,7 +53,7 @@ namespace Infrastructure.Repository
 
         public void Update(TEntity entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Update(entity);
             _context.SaveChanges();
         }
 

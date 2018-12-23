@@ -8,7 +8,7 @@ namespace Infrastructure.Repository
 {
     public interface IRepository<TEntity> where TEntity: Entity
     {
-        int Create(TEntity entity);
+        TEntity Create(TEntity entity);
         TEntity FindById(int id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Filter(Func<TEntity, bool> filter);
