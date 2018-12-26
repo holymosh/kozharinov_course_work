@@ -8,11 +8,17 @@ import InvestProject from '@/components/InvestProject'
 import Holding from '@/components/Holding'
 import crud from '@/components/crud'
 import Equipment from '@/components/Equipment'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
     {
       path: '/',
       name: 'HelloWorld',
