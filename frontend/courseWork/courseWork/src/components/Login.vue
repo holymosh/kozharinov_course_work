@@ -2,7 +2,7 @@
     <div class="login">
         <v-text-field v-model="user.username" label="Логин"></v-text-field>
         <v-text-field v-model="user.password" label="Пароль"></v-text-field>
-        <v-btn color="primary" dark class="mb-2" to="/objects" @click="login">Войти</v-btn>
+        <v-btn color="primary" dark class="mb-2" @click="login">Войти</v-btn>
     </div>
 </template>
 
@@ -22,8 +22,16 @@ export default {
     initialize () {
     },
     login () {
-      var el = document.getElementById('menu')
-      el.style.display = 'inline'
+      var username = this.user.username
+      if (username === 'admin' || username === 'read' || username === 'readwrite') {
+        window.role = username
+        this.$router.push('/objects')
+        var el = document.getElementById('menu')
+        el.style.display = 'inline'
+      }
+      else{
+        alert('Пользователь не найден')
+      }
     }
   }
 }
