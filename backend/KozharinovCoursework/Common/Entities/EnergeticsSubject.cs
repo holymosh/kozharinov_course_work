@@ -15,6 +15,6 @@ namespace Common.Entities
         public string PostAddress { get; set; }
         public string Kpp { get; set; }
         public int? HoldingId { get; set; }
-        public virtual  Holding Holding { get; set; }
+        public virtual Holding Holding { get; set; }
     }
 }

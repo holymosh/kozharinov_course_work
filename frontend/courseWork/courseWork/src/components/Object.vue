@@ -2,7 +2,7 @@
     <div id="Object">
         <h1>Объекты электроэнергетики</h1>
       <v-dialog class="flo" v-model="dialog" max-width="700px">
-          <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
+          <v-btn slot="activator" color="primary" v-show="showEditable" dark class="mb-2">Создать</v-btn>
           <v-card height="400px">
               <v-card-title>
                   <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
@@ -63,7 +63,7 @@
                 <td>{{props.item.subject}}</td>
                 <td>{{props.item.address}}</td>
                 <td>{{props.item.type}}</td>
-                <td class="justify-center layout px-0">
+                <td v-show="showEditable" class="justify-center layout px-0">
                     <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
                     <v-icon small class="mr-2" @click="deleteItem(props.item)">delete</v-icon>
                 </td>
@@ -87,6 +87,7 @@ h1{
 export default {
   data: () => ({
     dialog: false,
+    showEditable: window.role !== 'read',
     headers: [
       {text: 'Id', value: 'id'},
       {text: 'Наименование', value: 'name'},

@@ -2,8 +2,8 @@
     <div id="Subject">
         <h1>Субъекты электроэнергетики</h1>
       <v-dialog class="flo" v-model="dialog" max-width="600px">
-          <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
-          <v-card>
+          <v-btn v-show="showEditable" slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
+          <v-card height="580px">
               <v-card-title>
                   <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
               </v-card-title>
@@ -11,7 +11,7 @@
               <v-card-text>
                   <v-container grid-list-md>
                       <v-layout wrap>
-                          <v-flex xs12 sm6 md4>
+                          <v-flex class="hidden" xs12 sm6 md4>
                               <v-text-field v-model="editedItem.id" label="Id"></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
@@ -33,9 +33,15 @@
                               <v-text-field v-model="editedItem.kpp" label="КПП"></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
-                              <!-- <v-text-field v-model="editedItem.holding" label="Холдинг"></v-text-field> -->
-                              <v-select attach v-model="editItem.holding" label="Холдинг"
-                               :items="subjects.map(subj => { return subj.holding.name ? subj.holding.name : subj.holding })"></v-select>
+                              <v-select attach v-model="editedItem.holding" label="Холдинг"
+                               :items="holdings">
+                               <template slot="selection" slot-scope="data">
+                                  {{data.item.name}}
+                                </template>
+                                <template slot="item" slot-scope="data">
+                                  {{data.item.name}}
+                                </template>
+                               </v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.email" label="E-mail"></v-text-field>
@@ -53,16 +59,16 @@
         </v-dialog>
         <v-data-table :headers="headers" :rows-per-page-items="[7]" :items="subjects" class="elevation-1">
             <template slot="items" slot-scope="props">
-                <td>{{props.item.id}}</td>
+                <td class="hidden">{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
                 <td>{{props.item.okved}}</td>
                 <td>{{props.item.inn}}</td>
                 <td>{{props.item.address}}</td>
                 <td>{{props.item.postAddress}}</td>
                 <td>{{props.item.kpp}}</td>
-                <td>{{props.item.holding}}</td>
+                <td>{{props.item.holding ? props.item.holding.name : ''}}</td>
                 <td>{{props.item.email}}</td>
-                <td class="justify-center layout px-0">
+                <td v-show="showEditable" class="justify-center layout px-0">
                     <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
                     <v-icon small class="mr-2" @click="deleteItem(props.item)">delete</v-icon>
                 </td>
@@ -81,13 +87,16 @@ h1{
     font-family: Arial, Helvetica, sans-serif;
     margin-top:2%;
 }
+.hidden{
+    display: none;
+}
 </style>
 <script>
 export default {
   data: () => ({
     dialog: false,
+    showEditable: window.role !== 'read',
     headers: [
-      {text: 'Id', value: 'id'},
       {text: 'Наименование', value: 'name'},
       {text: 'Оквед', value: 'okved'},
       {text: 'ИНН', value: 'inn'},
@@ -98,6 +107,7 @@ export default {
       {text: 'E-mail', value: 'email'}
     ],
     subjects: [],
+    holdings: [],
     editedIndex: -1,
     editedItem: {
       id: 0,
@@ -139,13 +149,22 @@ export default {
   },
   methods: {
     initialize () {
-      this.subjects = [
-        {id: 1, name: 'Субъект1', okved: 'окв', inn: '213211', address: 'ул. Тестировщиков д 1 кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'},
-        {id: 2, name: 'Субъект2', okved: 'окв', inn: '213212', address: 'ул. Тестировщиков д 2 кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'},
-        {id: 3, name: 'Субъект3', okved: 'окв', inn: '213213', address: 'ул. Тестировщиков д 3кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'},
-        {id: 4, name: 'Субъект4', okved: 'окв', inn: '213215', address: 'ул. Тестировщиков д 4кожевника', postAddress: 'Такой же', kpp: 'кпп', holding: 'АО Электроэнергетика РФ', email: 'subjemail@subj.ru@misos.ru'}
-
-      ]
+      this.initializeHoldings()
+      this.initializeSubjects()
+    },
+    initializeHoldings () {
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', 'https://localhost:44389/api/holding', false)
+      xhr.send(null)
+      this.holdings = JSON.parse(xhr.responseText)
+      console.log(this.holdings)
+    },
+    initializeSubjects () {
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', 'https://localhost:44389/api/subject', false)
+      xhr.send(null)
+      this.subjects = JSON.parse(xhr.responseText)
+      console.log(this.subjects)
     },
     editItem (item) {
       this.editedIndex = this.subjects.indexOf(item)
@@ -155,6 +174,10 @@ export default {
     deleteItem (item) {
       const index = this.subjects.indexOf(item)
       confirm('delete') && this.subjects.splice(index, 1)
+      var xhr = new XMLHttpRequest()
+      xhr.open('DELETE', 'https://localhost:44389/api/subject/' + item.id, false)
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      xhr.send(null)
     },
     close () {
       this.dialog = false
@@ -164,10 +187,21 @@ export default {
       }, 300)
     },
     save () {
-      if (this.editedIndex > 1) {
+      var data = JSON.stringify(this.editedItem)
+      var xhr = new XMLHttpRequest()
+      if (this.editedIndex > -1) {
         Object.assign(this.subjects[this.editedIndex], this.editedItem)
+        xhr.open('PUT', 'https://localhost:44389/api/subject', false)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.send(data)
       } else {
+        xhr.open('POST', 'https://localhost:44389/api/subject', false)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        console.log(this.editedItem)
+        xhr.send(data)
+        this.editedItem.id = xhr.responseText
         this.subjects.push(this.editedItem)
+        console.log(this.editedItem.id)
       }
       this.close()
     }

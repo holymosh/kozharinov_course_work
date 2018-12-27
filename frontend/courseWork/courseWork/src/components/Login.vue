@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <v-text-field v-model="user.username" label="Логин"></v-text-field>
-        <v-text-field v-model="user.password" label="Пароль"></v-text-field>
+        <v-text-field :type="'password'" v-model="user.password" label="Пароль"></v-text-field>
         <v-btn color="primary" dark class="mb-2" @click="login">Войти</v-btn>
     </div>
 </template>
@@ -28,8 +28,7 @@ export default {
         this.$router.push('/objects')
         var el = document.getElementById('menu')
         el.style.display = 'inline'
-      }
-      else{
+      } else {
         alert('Пользователь не найден')
       }
     }

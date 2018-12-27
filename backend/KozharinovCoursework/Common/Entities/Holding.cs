@@ -11,5 +11,7 @@ namespace Common.Entities
 
         public int? ParentId { get; set; }
         public virtual Holding Parent { get; set; }
+
+        public virtual ICollection<EnergeticsSubject> EnergeticsSubjects { get; set; }
     }
 }

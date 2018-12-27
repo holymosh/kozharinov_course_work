@@ -2,7 +2,7 @@
     <div id="Holding">
         <h1>Холдинги</h1>
       <v-dialog v-model="dialog" max-width="500px">
-          <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
+          <v-btn v-show="showEditable" slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
           <v-card height="400px">
               <v-card-title>
                   <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
@@ -18,7 +18,6 @@
                               <v-text-field v-model="editedItem.name" label="Наименование"></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6>
-                              <!-- <v-text-field v-model="editedItem.parent" label="Родительский холдинг"></v-text-field> -->
                               <v-select attach v-model="editedItem.parent" :items="holdings" label="Родительский холдинг">
                                 <template slot="selection" slot-scope="data">
                                   {{data.item.name}}
@@ -45,7 +44,7 @@
                 <td class="hidden">{{props.item.id}}</td>
                 <td>{{props.item.name}}</td>
                 <td>{{props.item.parent ? props.item.parent.name :'' }}</td>
-                <td class="justify-center layout px-0">
+                <td v-show="showEditable" class="justify-center layout px-0">
                     <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
                     <v-icon small class="mr-2" @click="deleteItem(props.item)">delete</v-icon>
                 </td>
@@ -72,9 +71,9 @@ h1{
 export default {
   data: () => ({
     dialog: false,
+    showEditable: window.role !== 'read',
     rowsPerPageItems: [20],
     headers: [
-      // {text: 'Id', value: 'id'},
       {text: 'Наименование', value: 'name'},
       {text: 'Родительский холдинг', value: 'parent'}
     ],
@@ -134,11 +133,6 @@ export default {
       }, 300)
     },
     save () {
-      // if (this.editedIndex > 1) {
-      //   Object.assign(this.holdings[this.editedIndex], this.editedItem)
-      // } else {
-      //   this.holdings.push(this.editedItem)
-      // }
       var data = JSON.stringify(this.editedItem)
       var xhr = new XMLHttpRequest()
       if (this.editedIndex > 1) {

@@ -2,7 +2,7 @@
     <div id="Equipment">
         <h1>Оборудование проектов</h1>
       <v-dialog v-model="dialog" max-width="500px">
-          <v-btn slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
+          <v-btn v-show="showEditable" slot="activator" color="primary" dark class="mb-2">Создать</v-btn>
           <v-card height="500px">
               <v-card-title>
                   <span class="headline">{{editedIndex === -1 ? 'Создание' : 'Редактирование'}}</span>
@@ -51,8 +51,8 @@
                 <td>{{props.item.type}}</td>
                 <td>{{props.item.manufacturer}}</td>
                 <td>{{props.item.cost}}</td>
-                <td class="hidden">{{props.item.project}}</td>
-                <td class="justify-center layout px-0">
+                <td>{{props.item.project}}</td>
+                <td v-show="showEditable" class="justify-center layout px-0">
                     <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
                     <v-icon small class="mr-2" @click="deleteItem(props.item)">delete</v-icon>
                 </td>
@@ -77,6 +77,7 @@ h1{
 export default {
   data: () => ({
     dialog: false,
+    showEditable: window.role !== 'read',
     headers: [
       // {text: 'Id', value: 'id'},
       {text: 'Наименование', value: 'name'},
