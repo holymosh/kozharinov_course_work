@@ -28,20 +28,21 @@
                               </v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
-                              <v-select attach v-model="editedItem.subject" :items="subjects" label="Субъект">
+                              <v-select width="350px" attach v-model="editedItem.subject" :items="subjects" label="Субъект" >
                                 <template slot="selection" slot-scope="data">
-                                 {{data.item.name}}
-                                 </template>
-                                 <template slot="item" slot-scope="data">
-                                   {{data.item.name}}
-                                 </template>
+                                  {{data.item.name}}
+                                </template>
+                                <template slot="item" slot-scope="data">
+                                  {{data.item.name}}
+                                </template>
                               </v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.address" label="Адрес"></v-text-field>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.objType" label="Тип объекта"></v-text-field>
+                              <!-- <v-text-field v-model="editedItem.objType" label="Тип объекта"></v-text-field> -->
+                              <v-select width="350px" attach v-model="editedItem.objType" :items="objectTypes.map(function(arg){return arg.title})" label="Тип"></v-select>
                           </v-flex>
                       </v-layout>
                   </v-container>
@@ -98,6 +99,7 @@ export default {
       {text: 'Тип', value: 'objType'}
     ],
     objects: [],
+    objectTypes: [],
     subjects: [],
     editedIndex: -1,
     editedItem: {
@@ -130,15 +132,15 @@ export default {
     }
   },
   created () {
-    this.initializeSubjects()
     this.initialize()
   },
   methods: {
     initializeSubjects () {
       var xhr = new XMLHttpRequest()
-      xhr.open('GET', 'https://localhost:44389/api/subject', false)
+      xhr.open('GET', 'https://localhost:44389/api/subject/all', false)
       xhr.send(null)
       this.subjects = JSON.parse(xhr.responseText)
+      console.log(xhr.responseText)
     },
     initializeObjects () {
       var xhr = new XMLHttpRequest()
@@ -146,9 +148,16 @@ export default {
       xhr.send(null)
       this.objects = JSON.parse(xhr.responseText)
     },
+    initializeTypes () {
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', 'https://localhost:44389/api/type', false)
+      xhr.send(null)
+      this.objectTypes = JSON.parse(xhr.responseText)
+    },
     initialize () {
       this.initializeSubjects()
       this.initializeObjects()
+      this.initializeTypes()
     },
     editItem (item) {
       this.editedIndex = this.objects.indexOf(item)

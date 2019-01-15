@@ -26,7 +26,6 @@
                                   {{data.item.name}}
                                 </template>
                               </v-select>
-                              <!-- <v-overflow-btn :items="holdings" label="test"></v-overflow-btn> -->
                           </v-flex>
                       </v-layout>
                   </v-container>

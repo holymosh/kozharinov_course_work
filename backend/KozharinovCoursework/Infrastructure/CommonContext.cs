@@ -11,7 +11,6 @@ namespace Infrastructure
         public CommonContext(DbContextOptions<CommonContext> contextOptions) : base(contextOptions)
         {
             Database.EnsureCreated();
-            //Database.ExecuteSqlCommand(Database.GenerateCreateScript());
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -83,9 +82,10 @@ namespace Infrastructure
             builder.Property(project => project.Customer);
             builder.Property(project => project.Description);
             builder.Property(project => project.Executor);
-            builder.Property(project => project.Start);
-            builder.Property(project => project.End);
+            builder.Property(project => project.StartYear);
+            builder.Property(project => project.EndYear);
             builder.HasMany(project => project.EnergeticsObjects);
+            builder.HasOne(project => project.EnergeticsObject).WithMany(o => o.InvestProjects);
             builder.HasMany(project => project.ProjectChecks).WithOne(check => check.InvestProject).OnDelete(DeleteBehavior.ClientSetNull);
             builder.HasMany(project => project.ProjectEquipments).WithOne(equipment => equipment.InvestProject)
                 .OnDelete(DeleteBehavior.ClientSetNull);

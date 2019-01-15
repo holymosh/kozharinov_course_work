@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Common.Entities;
 using Infrastructure.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +22,22 @@ namespace UiApi.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_objectRepository.DbSet.Include(o => o.Subject).Include(o => o.Parent));
+            try
+            {
+                var res = _objectRepository.DbSet.Include(o => o.Subject).Include(o => o.Parent);
+                return Ok(res);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet]
+        [Route("all")]
+        public IActionResult GetAllObjects()
+        {
+            return Ok(_objectRepository.GetAll());
         }
 
         [HttpPost]
@@ -59,6 +70,13 @@ namespace UiApi.Controllers
         [HttpPut]
         public IActionResult Update([FromBody] EnergeticsObject energeticsObject)
         {
+            if (energeticsObject.SubjectId != null && energeticsObject.SubjectId.Value != energeticsObject.Subject.Id)
+            {
+                var subj = _subjectRepository.FindById(energeticsObject.Subject.Id);
+                energeticsObject.Subject = subj;
+                energeticsObject.SubjectId = subj.Id;
+            }
+
             _objectRepository.Update(energeticsObject);
             return Ok();
         }

@@ -29,6 +29,13 @@ namespace UiApi.Controllers
             return Ok(_subjectRepository.DbSet.Include(subj => subj.Holding));
         }
 
+        [HttpGet]
+        [Route("all")]
+        public IActionResult GetForObjectPage()
+        {
+            return Ok(_subjectRepository.GetAll());
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] EnergeticsSubject energeticsSubject)
         {

@@ -2,9 +2,8 @@
   <div id="app" >
     <div id="menu" class="menu">
     <v-toolbar dark dense>
-      <v-toolbar-side-icon to="/">
-      </v-toolbar-side-icon>
       <v-toolbar-items>
+        <v-btn flat to="/">Типы объектов</v-btn>
         <v-btn flat to="/objects">Объекты</v-btn>
         <v-btn flat to="/subjects">Субъекты</v-btn>
         <v-btn flat to="/projects">Проекты</v-btn>
