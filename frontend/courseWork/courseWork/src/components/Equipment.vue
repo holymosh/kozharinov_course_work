@@ -85,7 +85,8 @@ export default {
       {text: 'Тип оборудования', value: 'type'},
       {text: 'Производитель', value: 'manufacturer'},
       {text: 'Стоимость', value: 'cost'},
-      {text: 'Проект', value: 'project'}
+      {text: 'Проект', value: 'project'},
+      {text: 'Примерная дата поломки', value: 'predicted'}
     ],
     equipments: [],
     editedIndex: -1,
@@ -96,7 +97,8 @@ export default {
       type: '',
       manufacturer: '',
       cost: 0,
-      project: ''
+      project: '',
+      predicted: new Date()
     },
     defaultItem: {
       id: 0,
@@ -105,7 +107,8 @@ export default {
       type: '',
       manufacturer: '',
       cost: 0,
-      project: ''
+      project: '',
+      predicted: new Date()
     }
   }),
 

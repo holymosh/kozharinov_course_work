@@ -4,7 +4,7 @@ using Microsoft.ML.Data;
 
 namespace ML
 {
-    public class MlData
+    public class PredictionInput
     {
         [LoadColumn(0)]
         public int VendorId { get; set; }
