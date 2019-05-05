@@ -137,20 +137,20 @@ export default {
   methods: {
     initializeSubjects () {
       var xhr = new XMLHttpRequest()
-      xhr.open('GET', 'https://localhost:44389/api/subject/all', false)
+      xhr.open('GET', 'http://localhost:44389/api/subject/all', false)
       xhr.send(null)
       this.subjects = JSON.parse(xhr.responseText)
       console.log(xhr.responseText)
     },
     initializeObjects () {
       var xhr = new XMLHttpRequest()
-      xhr.open('GET', 'https://localhost:44389/api/object', false)
+      xhr.open('GET', 'http://localhost:44389/api/object', false)
       xhr.send(null)
       this.objects = JSON.parse(xhr.responseText)
     },
     initializeTypes () {
       var xhr = new XMLHttpRequest()
-      xhr.open('GET', 'https://localhost:44389/api/type', false)
+      xhr.open('GET', 'http://localhost:44389/api/type', false)
       xhr.send(null)
       this.objectTypes = JSON.parse(xhr.responseText)
     },
@@ -168,7 +168,7 @@ export default {
       const index = this.objects.indexOf(item)
       confirm('delete') && this.objects.splice(index, 1)
       var xhr = new XMLHttpRequest()
-      xhr.open('DELETE', 'https://localhost:44389/api/object/' + item.id, false)
+      xhr.open('DELETE', 'http://localhost:44389/api/object/' + item.id, false)
       xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.send(null)
     },
@@ -184,11 +184,11 @@ export default {
       var xhr = new XMLHttpRequest()
       if (this.editedIndex > -1) {
         Object.assign(this.objects[this.editedIndex], this.editedItem)
-        xhr.open('PUT', 'https://localhost:44389/api/object', false)
+        xhr.open('PUT', 'http://localhost:44389/api/object', false)
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(data)
       } else {
-        xhr.open('POST', 'https://localhost:44389/api/object', false)
+        xhr.open('POST', 'http://localhost:44389/api/object', false)
         xhr.setRequestHeader('Content-Type', 'application/json')
         console.log(this.editedItem)
         xhr.send(data)

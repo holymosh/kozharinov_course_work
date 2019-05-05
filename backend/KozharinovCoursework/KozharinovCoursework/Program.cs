@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using System.Net;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace UiApi
@@ -12,6 +13,6 @@ namespace UiApi
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>().UseKestrel(options => options.Listen(IPAddress.Loopback, 44389));
     }
 }

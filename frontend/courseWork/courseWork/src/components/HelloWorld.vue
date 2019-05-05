@@ -82,7 +82,7 @@ export default {
   methods: {
     initialize () {
       var xhr = new XMLHttpRequest()
-      xhr.open('GET', 'https://localhost:44389/api/type', false)
+      xhr.open('GET', 'http://localhost:44389/api/type', false)
       xhr.send(null)
       this.objectTypes = JSON.parse(xhr.responseText)
     },
@@ -96,7 +96,7 @@ export default {
       const index = this.objectTypes.indexOf(item)
       confirm('delete') && this.objectTypes.splice(index, 1)
       var xhr = new XMLHttpRequest()
-      xhr.open('DELETE', 'https://localhost:44389/api/type/' + item.id, false)
+      xhr.open('DELETE', 'http://localhost:44389/api/type/' + item.id, false)
       xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.send(null)
     },
@@ -113,12 +113,12 @@ export default {
       console.log('edited index - ' + this.editedIndex)
       if (this.editedIndex > 0) {
         Object.assign(this.objectTypes[this.editedIndex], this.editedItem)
-        xhr.open('PUT', 'https://localhost:44389/api/type', false)
+        xhr.open('PUT', 'http://localhost:44389/api/type', false)
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(data)
       } else {
         console.log(this.editedIndex)
-        xhr.open('POST', 'https://localhost:44389/api/type', false)
+        xhr.open('POST', 'http://localhost:44389/api/type', false)
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(data)
         this.editedItem.id = xhr.responseText

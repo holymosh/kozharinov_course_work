@@ -154,14 +154,14 @@ export default {
     },
     initializeHoldings () {
       var xhr = new XMLHttpRequest()
-      xhr.open('GET', 'https://localhost:44389/api/holding', false)
+      xhr.open('GET', 'http://localhost:44389/api/holding', false)
       xhr.send(null)
       this.holdings = JSON.parse(xhr.responseText)
       console.log(this.holdings)
     },
     initializeSubjects () {
       var xhr = new XMLHttpRequest()
-      xhr.open('GET', 'https://localhost:44389/api/subject', false)
+      xhr.open('GET', 'http://localhost:44389/api/subject', false)
       xhr.send(null)
       this.subjects = JSON.parse(xhr.responseText)
       console.log(this.subjects)
@@ -175,7 +175,7 @@ export default {
       const index = this.subjects.indexOf(item)
       confirm('delete') && this.subjects.splice(index, 1)
       var xhr = new XMLHttpRequest()
-      xhr.open('DELETE', 'https://localhost:44389/api/subject/' + item.id, false)
+      xhr.open('DELETE', 'http://localhost:44389/api/subject/' + item.id, false)
       xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.send(null)
     },
@@ -191,11 +191,11 @@ export default {
       var xhr = new XMLHttpRequest()
       if (this.editedIndex > -1) {
         Object.assign(this.subjects[this.editedIndex], this.editedItem)
-        xhr.open('PUT', 'https://localhost:44389/api/subject', false)
+        xhr.open('PUT', 'http://localhost:44389/api/subject', false)
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(data)
       } else {
-        xhr.open('POST', 'https://localhost:44389/api/subject', false)
+        xhr.open('POST', 'http://localhost:44389/api/subject', false)
         xhr.setRequestHeader('Content-Type', 'application/json')
         console.log(this.editedItem)
         xhr.send(data)
