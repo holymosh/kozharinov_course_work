@@ -8,6 +8,7 @@ namespace Common.Entities
     {
         public string State { get; set; }
         public int VendorId { get; set; }
+        public double Power { get; set; }
         public int TypeId { get; set; }
         public string Type { get; set; }
         public string Manufacturer { get; set; }

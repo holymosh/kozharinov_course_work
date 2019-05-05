@@ -34,10 +34,12 @@ namespace ML
                 .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "typeIdEncoded",
                     inputColumnName: "typeId"))
                 .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "vendorIdEncoded",
-                    inputColumnName: "vendorIdCode"))
+                    inputColumnName: "vendorIdCode")).
+                Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "power",
+                    inputColumnName: "Power"))
                 .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "workTimeEncoded",
                     inputColumnName: "WorkTime")).Append(mlContext.Transforms.Concatenate("Features",
-                    "VendorIdEncoded", "TypeIdEncoded","WorkTime")).Append(mlContext.Regression.Trainers.OnlineGradientDescent());
+                    "VendorIdEncoded", "TypeIdEncoded","Power","WorkTime")).Append(mlContext.Regression.Trainers.OnlineGradientDescent());
             var model = pipeline.Fit(dataView);
             return model;
         }

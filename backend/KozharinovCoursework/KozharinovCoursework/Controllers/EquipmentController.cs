@@ -39,7 +39,7 @@ namespace UiApi.Controllers
         public IActionResult Create([FromBody] ProjectEquipment projectEquipment)
         {
             var prediction = _predictionService.PredictWorkTime(new PredictionInput
-                {TypeId = projectEquipment.TypeId, VendorId = projectEquipment.VendorId});
+                {TypeId = projectEquipment.TypeId, VendorId = projectEquipment.VendorId, Power = projectEquipment.Power});
             projectEquipment.PredictedDate = prediction.ToDateTime();
             var created = _repository.Create(projectEquipment);
             return Ok(created);

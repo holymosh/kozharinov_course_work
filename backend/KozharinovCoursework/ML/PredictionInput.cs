@@ -12,6 +12,8 @@ namespace ML
         public int TypeId { get; set; }
         [LoadColumn(2)]
         public double WorkTime { get; set; }
+        [LoadColumn(3)]
+        public double Power { get; set; }
     }
 
     public class WorkTimePrediction

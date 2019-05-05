@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure;
 using Infrastructure.Repository;
+using ML;
 
 namespace UiApi
 {
@@ -23,6 +24,7 @@ namespace UiApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.RegisterEntities(Configuration.GetConnectionString("common"));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IPredictionService, PredicitionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
