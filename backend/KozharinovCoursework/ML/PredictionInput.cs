@@ -11,12 +11,18 @@ namespace ML
         [LoadColumn(1)]
         public int TypeId { get; set; }
         [LoadColumn(2)]
-        public float WorkTime { get; set; }
+        public double WorkTime { get; set; }
     }
 
     public class WorkTimePrediction
     {
         [Column("WorkTime")]
-        public float WorkTime { get; set; }
+        public double WorkTime { get; set; }
+
+        public DateTime ToDateTime()
+        {
+            var timeSpan = TimeSpan.FromSeconds(WorkTime);
+            return DateTime.Now + timeSpan;
+        }
     }
 }

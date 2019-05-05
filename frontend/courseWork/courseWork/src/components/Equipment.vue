@@ -21,7 +21,14 @@
                               <v-text-field v-model="editedItem.state" label="Состояние"></v-text-field>
                           </v-flex>
                           <v-flex>
-                              <v-text-field v-model="editedItem.eqType" label="Тип оборудования"></v-text-field>
+                              <v-select attach v-model="editedItem.eqType" :items="equipments.map(function (el) {return el.eqType})" label="Тип оборудования">
+                                <template slot="selection" slot-scope="data">
+                                  {{data.item}}
+                                </template>
+                                <template slot="item" slot-scope="data">
+                                  {{data.item}}
+                                </template>
+                              </v-select>
                           </v-flex>
                           <v-flex xs12 sm6 md4>
                               <v-text-field v-model="editedItem.type" label="Производитель"></v-text-field>
@@ -173,7 +180,6 @@ export default {
     },
     predict (item) {
       var today = new Date()
-      console.log(item)
       var year = today.getFullYear() + this.getYearByType(item.eqType)
       var month = today.getMonth()
       var day = today.getDate()
@@ -187,10 +193,6 @@ export default {
         {title: 'Шунтирующий реактор', year: 30},
         {title: 'Выключатель', year: 20}
       ]
-      var deb = typeToTime.find(function (item) {
-        return item.title === itemType
-      })
-      console.log(deb)
       return typeToTime.find(function (item) {
         return item.title === itemType
       }).year

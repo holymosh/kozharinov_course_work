@@ -31,14 +31,13 @@ namespace ML
         {
             IDataView dataView = mlContext.Data.LoadFromTextFile<PredictionInput>(dataPath, hasHeader: true, separatorChar: ',');
             var pipeline = mlContext.Transforms.CopyColumns(outputColumnName: "Label", inputColumnName: "FareAmount")
-                .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "VendorIdEncoded",
-                    inputColumnName: "VendorId"))
-                .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "RateCodeEncoded",
-                    inputColumnName: "RateCode"))
-                .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "PaymentTypeEncoded",
-                    inputColumnName: "PaymentType")).Append(mlContext.Transforms.Concatenate("Features",
-                    "VendorIdEncoded", "RateCodeEncoded", "PassengerCount", "TripTime", "TripDistance",
-                    "PaymentTypeEncoded")).Append(mlContext.Regression.Trainers.OnlineGradientDescent());
+                .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "typeIdEncoded",
+                    inputColumnName: "typeId"))
+                .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "vendorIdEncoded",
+                    inputColumnName: "vendorIdCode"))
+                .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "workTimeEncoded",
+                    inputColumnName: "WorkTime")).Append(mlContext.Transforms.Concatenate("Features",
+                    "VendorIdEncoded", "TypeIdEncoded","WorkTime")).Append(mlContext.Regression.Trainers.OnlineGradientDescent());
             var model = pipeline.Fit(dataView);
             return model;
         }
